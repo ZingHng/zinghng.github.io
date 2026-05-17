@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About Zing</title>
+    <link rel="stylesheet" href="homepage.css">
+</head>
+<body>
+    <div class="image-window" id="image_window">
+        <div class="fixed-background"></div>
+        <header id="header">
+            <div class="header-left">
+                resolved.
+            </div>
+            <div class="header-right">
+                <a href="mailto:e1398185@u.nus.edu">Email</a>
+                <a href="https://www.linkedin.com/in/ngzinghng/" target="_blank">LinkedIn</a>
+            </div>
+        </header>
+    </div>
+
+    <div id="wave" style="width: 100%; height: 4vh;">
+        <div class="wave_clipper" id="wave_clipper"></div>
+    </div>
+    <div class="ruler-bar" id="rulerBar"></div>
+
+    <script>
+        const wrapper = document.getElementById('image_window');
+        const wave = document.getElementById('wave');
+        const originalHeight = window.innerHeight * 0.70;  // Starting height
+        const minHeight = window.innerHeight * 0.32;      // Minimum height
+        const maxDistance = window.innerHeight * 0.2;     // Scroll threshold
+        wrapper.style.transition = 'none';
+        wrapper.style.height = `${originalHeight}px`;
+        window.addEventListener('scroll', () => {
+            wrapper.style.transition = 'height 0.5s ease';
+            const scrollY = window.scrollY;
+            const offsetTop = wrapper.offsetTop + maxDistance;
+            if (scrollY <= offsetTop) {
+                wrapper.style.height = `${originalHeight}px`;
+            } else {
+                wrapper.style.height = `${minHeight}px`;}
+            const opacity = Math.max(0, Math.min((scrollY - maxDistance) / originalHeight * 7.5, 1)).toFixed(2);
+            wrapper.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;
+            wave.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;            
+        });
+
+        function updateClipPath() {
+            const wave_clipper = document.getElementById('wave_clipper');
+            const max_width = window.innerWidth;
+            const max_height = 60;
+            const clipPath = `path("M0,${max_height * 0.3} C${max_width * 0.5},${-max_height*0.4} ${max_width * 0.75},${max_height*0.8} ${max_width},0 L${max_width},${max_height*0.8} L0,${max_height} Z")`;        wave_clipper.style.clipPath = clipPath;
+            wave_clipper.style.webkitClipPath = clipPath;};
+
+        window.addEventListener('resize', updateClipPath);
+        window.addEventListener('DOMContentLoaded', updateClipPath);
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const rulerBar = document.getElementById("rulerBar");
+            const paddingLeft = 40;
+            const interval = 160;
+            const totalWidth = window.innerWidth;
+            const usableWidth = totalWidth - paddingLeft;
+            const count = Math.floor(usableWidth / interval) + 1;
+            rulerBar.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+            const num = (i + 2) * 5;
+            const span = document.createElement("span");
+            span.className = "ruler-number";
+            span.textContent = num;
+            rulerBar.appendChild(span);}});
+    </script>
+
+    <main>
+        <div class="intro_container">
+            <div class="intro_wrapper">
+                <img src="homepage_graphics/ZingPuppet.svg">
+                <div class="speech_bubble">
+                    <p style="font-size:1.33em; margin-bottom: 0px;">
+                        <b>Hi! I'm Ng Zing Hng.</b><br>
+                        Most call me <u>Zing</u>.</p>
+                    <p style="color: #3a3a3a; font-size: 0.666em;">
+I align cross-functional teams, optimize workflows, and execute mission-critical projects with a focus on efficiency, risk mitigation, and stakeholder value.<p>
+                        I solve problems to deliver at reduced organizational risk.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="fullscreen-animation" class="animation-overlay">
+            <video id="animation-video" autoplay muted playsinline></video>
+        </div>
+
+        <div class="scroll-container" id="projectContainer">
+            <div class="scroll-spacer"></div>
+
+            <div class="scroll-item" data-link="projects.html">    
+                <img src="homepage_graphics/scroll_container_title.svg">        
+                <div class="feature">
+                    <p style="font-size: 1.33em; text-align: right; padding: 20px;">
+                        I <u>build</u>
+                    </p>
+                </div>
+            </div>
+ 
+            <div class="scroll-item" data-link="test/foldertest/base.html" data-animation="transition1.gif" data-duration=1500>
+                <div class="polaroid-box" style="transform: rotate(-2deg);">
+                    <div class="photo-area">
+                        <img src="projects/ExternalCell/thumb_externalcell.jpg">
+                    </div>
+                    <div class="caption">
+                        <p style="transform: rotate(1deg);">
+                        ORGANIZATIONS
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-item" data-link="test/foldertest/base.html" data-animation="cfd.gif" data-duration=4000>
+                <div class="polaroid-box" style="transform: rotate(-2deg);">
+                    <div class="photo-area">
+                        <img src="projects/BumbleBee/thumb_bumblebee.png" alt="BumbleBee">
+                    </div>
+                    <div class="caption">
+                        <p style="transform: rotate(1deg); font-size: 1rem">
+                        BumbleBee Autonomous<br>
+                        Systems
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-item" data-link="projects.html">
+                <img src="homepage_graphics/scroll_container_title.svg">        
+                <div class="feature">
+                    <p style="text-align: left; padding: 20px;">
+                        hardware and software.
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-spacer"></div>
+        </div>
+        
+        <div class="scroll-container" id="certificationContainer">
+            <div class="scroll-spacer"></div>   
+
+            <div class="scroll-item" data-link="certifications.html">
+                <img src="homepage_graphics/scroll_container_title.svg">        
+                <div class="feature">
+                    <p style="text-align: right; padding: 20px;">
+                        across skills and disciplines
+                    </p>
+                </div>
+            </div>
+
+            <div class="scroll-item" data-link="certifications.html#solidworks">
+                <div class="polaroid-box" style="transform: rotate(2deg);">
+                    <div class="photo-area">
+                        <img src="certifications/thumb_solidworks.png" alt="Solidworks Certification">
+                    </div>
+                    <div class="caption">
+                        <p style="transform: rotate(-1deg);">
+                        SOLIDWORKS
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="scroll-item" data-link="certifications.html">
+                <img src="homepage_graphics/scroll_container_title.svg">        
+                <div class="feature">
+                    <p style="font-size: 1.33em; text-align: left; padding: 20px;">
+                        I <u>learn</u>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="scroll-spacer"></div>
+        </div>
+
+        <script>
+            function scrollToItem(containerId, itemIndex) {
+                const container = document.getElementById(containerId);
+                const items = container.querySelectorAll('.scroll-item');
+                let index;
+                    if (typeof itemIndex === 'number') {
+                        index = itemIndex - 1;
+                    } else if (itemIndex === 'left') {
+                        index = 0;
+                    } else if (itemIndex === 'right') {
+                        index = items.length - 1;}
+
+                const item = items[index];
+                const containerWidth = container.clientWidth;
+                const itemWidth = item.offsetWidth;
+                const offset = item.offsetLeft - (containerWidth - itemWidth) / 2;
+                container.scrollTo({ left: offset, behavior: 'smooth' });
+            }
+            scrollToItem("projectContainer", "left")
+            scrollToItem("certificationContainer", "right")
+            
+            function centerScrollItem(container, item) {
+                const containerWidth = container.clientWidth;
+                const itemWidth = item.offsetWidth;
+                const offset = item.offsetLeft - (containerWidth - itemWidth) / 2;
+                container.scrollTo({ left: offset, behavior: 'smooth' });
+            }
+
+        document.querySelectorAll('.scroll-item').forEach((item) => {
+            item.addEventListener('click', () => {
+                const animationURL = item.dataset.animation;
+                const targetURL = item.dataset.link;
+                const duration = parseInt(item.dataset.duration) || 0; // default duration if using gif
+
+                if (!targetURL) {
+                    return;
+                }
+
+                const container = item.closest('.scroll-container');
+                if (container) {
+                    centerScrollItem(container, item);
+                }
+
+                setTimeout(() => {
+                        if (animationURL) {
+                            document.body.classList.add('disable-scroll');
+                            const overlay = document.getElementById('fullscreen-animation');
+                            const video = document.getElementById('animation-video');
+                            gif_src = animationURL + "?t=" + new Date().getTime();
+
+                            video.style.display = 'none';
+                            overlay.style.backgroundImage = `url(${gif_src})`;
+                            overlay.style.backgroundSize = 'cover';
+                            overlay.style.backgroundPosition = 'center';
+                            overlay.style.backgroundRepeat = 'no-repeat';
+                            overlay.style.display = 'flex';
+                            setTimeout(() => {
+                                document.body.classList.remove('disable-scroll');
+                                window.location.href = targetURL;
+                            }, duration);
+                        } else {
+                            window.location.href = targetURL;
+                        }
+                    }, 150);
+                });
+            });
+
+            window.addEventListener('pageshow', function(event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            });
+        </script>
+    </main>
+    <footer style="background-color: #202020; border-top:5px solid #3a3a3a;">
+            <div class="footer-left">
+                The right call for every job.
+            </div>
+            <div class="footer-right">
+                <a href="mailto:e1398185@u.nus.edu">Email</a>
+                <a href="https://github.com/ZingHng">GitHub</a>
+                <a href="https://www.linkedin.com/in/ngzinghng/" target="_blank">LinkedIn</a>
+            </div>
+    </footer>
+</body>
+</html>
