@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me</title>
     <link rel="stylesheet" href="homepage.css">
 </head>
@@ -27,30 +28,47 @@
     <script>
         const wrapper = document.getElementById('image_window');
         const wave = document.getElementById('wave');
-        const originalHeight = window.innerHeight * 0.70;  // Starting height
-        const minHeight = window.innerHeight * 0.20;      // Minimum height
-        const maxDistance = window.innerHeight * 0.10;     // Scroll threshold
+        const isPortrait = window.innerHeight > window.innerWidth;
+        const originalHeight = window.innerHeight * (isPortrait ? 0.40 : 0.70);
+        const minHeight = window.innerHeight * (isPortrait ? 0.18 : 0.20);
+        const maxDistance = window.innerHeight * 0.10;
+        let windowFrozen = false;
+
         wrapper.style.transition = 'none';
         wrapper.style.height = `${originalHeight}px`;
+
         window.addEventListener('scroll', () => {
+            if (windowFrozen) {
+                return;
+            }
+
             wrapper.style.transition = 'height 0.5s ease';
             const scrollY = window.scrollY;
             const offsetTop = wrapper.offsetTop + maxDistance;
+
             if (scrollY <= offsetTop) {
                 wrapper.style.height = `${originalHeight}px`;
             } else {
-                wrapper.style.height = `${minHeight}px`;}
+                wrapper.style.height = `${minHeight}px`;
+                wrapper.style.backgroundColor = `rgba(37, 37, 37, 1)`;
+                wave.style.backgroundColor = `rgba(37, 37, 37, 1)`;
+                windowFrozen = true;
+                return;
+            }
+
             const opacity = Math.max(0, Math.min((scrollY - maxDistance) / originalHeight * 7.5, 1)).toFixed(2);
             wrapper.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;
-            wave.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;            
+            wave.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;
         });
 
         function updateClipPath() {
             const wave_clipper = document.getElementById('wave_clipper');
             const max_width = window.innerWidth;
-            const max_height = 60;
-            const clipPath = `path("M0,${max_height * 0.3} C${max_width * 0.5},${-max_height*0.4} ${max_width * 0.75},${max_height*0.8} ${max_width},0 L${max_width},${max_height*0.8} L0,${max_height} Z")`;        wave_clipper.style.clipPath = clipPath;
-            wave_clipper.style.webkitClipPath = clipPath;};
+            const max_height = Math.min(70, Math.max(40, window.innerHeight * 0.06));
+            const clipPath = `path("M0,${max_height * 0.3} C${max_width * 0.5},${-max_height * 0.4} ${max_width * 0.75},${max_height * 0.8} ${max_width},0 L${max_width},${max_height * 0.8} L0,${max_height} Z")`;
+            wave_clipper.style.clipPath = clipPath;
+            wave_clipper.style.webkitClipPath = clipPath;
+        };
 
         window.addEventListener('resize', updateClipPath);
         window.addEventListener('DOMContentLoaded', updateClipPath);
