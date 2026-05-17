@@ -20,73 +20,90 @@
         </header>
     </div>
 
-    <div id="wave" style="width: 100%; height: 4vh;">
-        <div class="wave_clipper" id="wave_clipper"></div>
-    </div>
     <div class="ruler-bar" id="rulerBar"></div>
 
     <script>
         const wrapper = document.getElementById('image_window');
-        const wave = document.getElementById('wave');
+        const hero = document.querySelector('.fixed-background');
+
         const isPortrait = window.innerHeight > window.innerWidth;
-        const originalHeight = window.innerHeight * (isPortrait ? 0.40 : 0.70);
-        const minHeight = window.innerHeight * (isPortrait ? 0.18 : 0.20);
-        const maxDistance = window.innerHeight * 0.10;
+
+        const originalHeight =
+            window.innerHeight * (isPortrait ? 0.40 : 0.75);
+
+        const minHeight =
+            window.innerHeight * (isPortrait ? 0.18 : 0.20);
+
+        const maxDistance = window.innerHeight * 0.12;
+
         let windowFrozen = false;
 
+        // initial setup
         wrapper.style.transition = 'none';
         wrapper.style.height = `${originalHeight}px`;
 
-        window.addEventListener('scroll', () => {
-            if (windowFrozen) {
-                return;
-            }
-
-            wrapper.style.transition = 'height 0.5s ease';
+        function handleScroll() {
             const scrollY = window.scrollY;
             const offsetTop = wrapper.offsetTop + maxDistance;
 
-            if (scrollY <= offsetTop) {
-                wrapper.style.height = `${originalHeight}px`;
-            } else {
+            wrapper.style.transition = 'height 0.5s ease';
+
+            if (scrollY > offsetTop && !windowFrozen) {
                 wrapper.style.height = `${minHeight}px`;
-                wrapper.style.backgroundColor = `rgba(37, 37, 37, 1)`;
-                wave.style.backgroundColor = `rgba(37, 37, 37, 1)`;
+
+                wrapper.style.backgroundColor = 'rgba(37, 37, 37, 1)';
+
+                // remove hero image
+                hero?.classList.add('hidden');
+
                 windowFrozen = true;
+
+                // stop listening completely (best performance)
+                window.removeEventListener('scroll', handleScroll);
                 return;
             }
 
-            const opacity = Math.max(0, Math.min((scrollY - maxDistance) / originalHeight * 7.5, 1)).toFixed(2);
-            wrapper.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;
-            wave.style.backgroundColor = `rgba(37, 37, 37, ${opacity})`;
+            if (windowFrozen) return;
+
+            wrapper.style.height = `${originalHeight}px`;
+
+            const opacity = Math.max(
+                0,
+                Math.min(
+                    (scrollY - maxDistance) / originalHeight * 7.5,
+                    1
+                )
+            );
+
+            const bg = `rgba(37, 37, 37, ${opacity})`;
+
+            wrapper.style.backgroundColor = bg;
+        }
+
+        // mobile-friendly scroll listener
+        window.addEventListener('scroll', handleScroll, {
+            passive: true
         });
 
-        function updateClipPath() {
-            const wave_clipper = document.getElementById('wave_clipper');
-            const max_width = window.innerWidth;
-            const max_height = Math.min(70, Math.max(40, window.innerHeight * 0.06));
-            const clipPath = `path("M0,${max_height * 0.3} C${max_width * 0.5},${-max_height * 0.4} ${max_width * 0.75},${max_height * 0.8} ${max_width},0 L${max_width},${max_height * 0.8} L0,${max_height} Z")`;
-            wave_clipper.style.clipPath = clipPath;
-            wave_clipper.style.webkitClipPath = clipPath;
-        };
-
-        window.addEventListener('resize', updateClipPath);
-        window.addEventListener('DOMContentLoaded', updateClipPath);
-
+        // ruler (unchanged, still efficient)
         document.addEventListener("DOMContentLoaded", () => {
             const rulerBar = document.getElementById("rulerBar");
+
             const paddingLeft = 40;
             const interval = 160;
-            const totalWidth = window.innerWidth;
-            const usableWidth = totalWidth - paddingLeft;
+
+            const usableWidth = window.innerWidth - paddingLeft;
             const count = Math.floor(usableWidth / interval) + 1;
+
             rulerBar.innerHTML = '';
+
             for (let i = 0; i < count; i++) {
-            const num = (i + 2) * 5;
-            const span = document.createElement("span");
-            span.className = "ruler-number";
-            span.textContent = num;
-            rulerBar.appendChild(span);}});
+                const span = document.createElement("span");
+                span.className = "ruler-number";
+                span.textContent = (i + 2) * 5;
+                rulerBar.appendChild(span);
+            }
+        });
     </script>
 
     <main>
