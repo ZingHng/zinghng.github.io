@@ -146,6 +146,10 @@ header, footer {
 
         margin: 0 auto;
     }
+
+    .fixed-background {
+    background-image: url('homepage_graphics/long_hero_image.png');
+    }
     
     .footer-right a {
     margin: 0 12px;
@@ -322,7 +326,7 @@ p {
 
     height: 64px;
     font-size: 1em;
-    font-family: 'Patrick Hand', "Comic Sans MS", cursive;
+    font-family: 'Patrick Hand', "Comic Sans MS", sans-serif;
 
     background-color: ECEEEC;
     padding: 4px;
