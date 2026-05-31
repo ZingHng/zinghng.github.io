@@ -40,11 +40,6 @@ body {
     display: block;
 }
 
-body.disable-scroll {
-    overflow: hidden;
-    height: 100vh;
-}
-
 header, footer {
     position: relative;
     display: flex; 
@@ -76,7 +71,6 @@ footer {
     text-align: right;
     font-size: 1.3em;
 }
-
 .footer-right {
     margin-left: 0px;
     min-width: 200px;

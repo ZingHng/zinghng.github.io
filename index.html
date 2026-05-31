@@ -8,7 +8,6 @@
 </head>
 <body>
     <div class="image-window" id="image_window">
-        <div class="fixed-background"></div>
         <header id="header">
             <div class="header-left">
                 resolved.
@@ -18,65 +17,47 @@
                 <a href="https://www.linkedin.com/in/ngzinghng/" target="_blank">LinkedIn</a>
             </div>
         </header>
-        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 1440 80">  <path fill="rgb(57, 59, 63)"
-            d="
-            M0,10
-            C600,90 1000,60 1440,50
-            L1440,80
-            L0,80
-            Z
-            "></path></svg>
+        <div class="fixed-background"></div>
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 1440 80">  
+            <path fill="rgb(57, 59, 63)" d="M0,10C600,90 1000,60 1440,50L1440,80L0,80Z"></path>
+        </svg>
     </div>
 
     <script>
         const wrapper = document.getElementById('image_window');
         const hero = document.querySelector('.fixed-background');
-
-        const isPortrait = window.innerHeight > window.innerWidth;
-
-        const originalHeight =
-            window.innerHeight * (isPortrait ? 0.40 : 0.75);
-
-        const minHeight =
-            window.innerHeight * (isPortrait ? 0.15 : 0.15);
-
-        const maxDistance = window.innerHeight * 0.18;
+        const originalHeight = window.innerHeight * 0.75;
+        const minHeight = 200;
+        const maxDistance = window.innerHeight * 0.16;
 
         let windowFrozen = false;
         let initialScroll = true;
 
         const pageBgColor = getComputedStyle(document.documentElement).getPropertyValue('--page-bg').trim();
 
-        // initial setup
         wrapper.style.transition = 'none';
         wrapper.style.height = `${originalHeight}px`;
 
         function handleScroll() {
             const scrollY = window.scrollY;
-            const offsetTop = wrapper.offsetTop + maxDistance;
+            const offsetTop = wrapper.offsetTop + maxDistance + minHeight;
 
             wrapper.style.transition = 'height 1.2s ease';
 
             if (scrollY > offsetTop && !windowFrozen) {
                 wrapper.style.height = `${minHeight}px`;
-                
                 wrapper.style.backgroundColor = pageBgColor;
 
                 hero?.classList.add('hidden');
-
                 windowFrozen = true;
 
                 // stop listening completely (best performance)
                 window.removeEventListener('scroll', handleScroll);
                 return;
             }
-
             if (windowFrozen) return;
-
             wrapper.style.height = `${originalHeight}px`;
-
             const opacity = Math.min(1, ((scrollY-60)/maxDistance));
-
             wrapper.style.backgroundColor = pageBgColor.replace('rgb', 'rgba').replace(')', `, ${opacity})`);
         }
 
