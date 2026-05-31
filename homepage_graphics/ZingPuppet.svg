@@ -2,11 +2,11 @@
 	<title>ZingPuppet</title>
 	<style>
 		.s0 { fill: none;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 15 } 
-		.s1 { fill: #ECEEEC;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 15 } 
-		.s2 { fill: #ECEEEC;stroke: #000000;stroke-linecap: round;stroke-miterlimit:100;stroke-width: 15 } 
-		.s3 { fill: #ECEEEC;stroke: #000000;stroke-linejoin: round;stroke-width: 15 } 
+		.s1 { fill: #F2EFE6;stroke: #000000;stroke-linecap: round;stroke-linejoin: round;stroke-width: 15 } 
+		.s2 { fill: #F2EFE6;stroke: #000000;stroke-linecap: round;stroke-miterlimit:100;stroke-width: 15 } 
+		.s3 { fill: #F2EFE6;stroke: #000000;stroke-linejoin: round;stroke-width: 15 } 
 		.s4 { fill: #000000;stroke: #000000;stroke-miterlimit:100;stroke-width: 15 } 
-		.s5 { fill: #ECEEEC } 
+		.s5 { fill: #F2EFE6 } 
 	</style>
 	<g id="Puppet">
 		<path id="Left Leg" fill-rule="evenodd" class="s0" d="m282.8 484.2l23.8 25.8 11.4 40h6"/>
